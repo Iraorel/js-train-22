@@ -2,6 +2,37 @@
 
 // Клас Participant представляє користувача, який може відправляти повідомлення.
 class Participant {
+ /*
+     * Конструктор класу Participant.
+     * @param {string} alias - Псевдонім користувача.
+     * @param {object} communicator - Об'єкт-засіб комунікації, наприклад, EmailCommunicator або SMSCommunicator.
+     */
+    constructor(alias, communicator) {
+      this.alias = alias;
+      this.communicator = communicator;
+    }
+  
+    /**
+     * Метод dispatchMessage відправляє повідомлення за допомогою відповідного засобу комунікації.
+     * @param {string} text - Текст повідомлення.
+     */
+    dispatchMessage(text) {
+      // Викликаємо метод transmit відповідного засобу комунікації (communicator).
+      this.communicator.transmit(this.prepareMessage(text));
+    }
+  
+    /**
+     * Метод prepareMessage форматує текст повідомлення перед відправленням.
+     * @param {string} text - Текст повідомлення.
+     * @returns {string} - Підготовлене повідомлення.
+     */
+    prepareMessage(text) {
+      return `[${this.alias}]: ${text}`;
+    }
+  
+  
+  
+  
   // Конструктор приймає два параметри: alias, communicator
   // Метод dispatchMessage відправляє повідомлення за допомогою відповідного засобу комунікації.
   // Він приймає один параметр - text - текст повідомлення, яке потрібно відправити.
@@ -10,12 +41,30 @@ class Participant {
 
 // Клас SMSCommunicator відповідає за відправку повідомлень через SMS.
 class SMSCommunicator {
+  
+    // Статичний метод transmit відправляє SMS.
+    // Він приймає один параметр - message - текст повідомлення, яке потрібно відправити,
+    // та виводимо в консоль `Відправлено SMS: ${message}`.
+    static transmit(message) {
+      console.log(`Відправлено SMS: ${message}`);
+    }
+  
+  
   // Статичний метод transmit відправляє SMS.
   // Він приймає один параметр - message - текст повідомлення, яке потрібно відправити, та виводимо в консоль `Відправлено SMS: ${message}`.
 }
 
 // Клас EmailCommunicator відповідає за відправку повідомлень через Email.
 class EmailCommunicator {
+
+    // Статичний метод transmit відправляє Email.
+    // Він приймає один параметр - message - текст повідомлення, яке потрібно відправити,
+    // та виводимо в консоль `Відправлено Email: ${message}`.
+    static transmit(message) {
+      console.log(`Відправлено Email: ${message}`);
+    }
+  
+  
   // Статичний метод transmit відправляє Email.
   // Він приймає один параметр - message - текст повідомлення, яке потрібно відправити та виводимо в консоль `Відправлено Email: ${message}`.
 }
@@ -24,11 +73,11 @@ console.log("Завдання 7 ====================================");
 // Після виконання розкоментуйте код нижче
 
 // Створюємо двох користувачів - Max та Linda - які відправляють повідомлення за допомогою різних засобів комунікації.
-// const max = new Participant("Max", SMSCommunicator);
-// const linda = new Participant("Linda", EmailCommunicator);
+const max = new Participant("Max", SMSCommunicator);
+ const linda = new Participant("Linda", EmailCommunicator);
 
 // Max відправляє повідомлення через SMS.
-// max.dispatchMessage("Hello!"); // Виведе: Відправлено SMS: [Max]: Hello!
+ max.dispatchMessage("Hello!"); // Виведе: Відправлено SMS: [Max]: Hello!
 
 // Linda відправляє повідомлення через Email.
-// linda.dispatchMessage("Hello!"); // Виведе: Відправлено Email: [Linda]: Hello!
+linda.dispatchMessage("Hello!"); // Виведе: Відправлено Email: [Linda]: Hello!
